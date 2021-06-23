@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="https://cdn.datatables.net/fixedheader/3.1.9/css/fixedHeader.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/datetime/1.1.0/css/dataTables.dateTime.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+   
+  <script src="https://code.jquery.com/jquery-3.5.1.js">  </script>
+  <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js">  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js">  </script>
+  <script src="https://cdn.datatables.net/datetime/1.1.0/js/dataTables.dateTime.min.js">  </script>
+    
+    <script>
+  var minDate, maxDate;
+ 
+ // Custom filtering function which will search data in column four between two values
+ $.fn.dataTable.ext.search.push(
+     function( settings, data, dataIndex ) {
+         var min = minDate.val();
+         var max = maxDate.val();
+         var date = new Date( data[4] );
+  
+         if (
+             ( min === null && max === null ) ||
+             ( min === null && date <= max ) ||
+             ( min <= date   && max === null ) ||
+             ( min <= date   && date <= max )
+         ) {
+             return true;
+         }
+         return false;
+     }
+ );
+  
+ $(document).ready(function() {
+    $('#example').DataTable( {
+        "paging":   false,
+        "ordering": false,
+        "info":     false, 
+        "searching": false 
+    } );
+     // Create date inputs
+     minDate = new DateTime($('#min'), {
+         format: 'MMMM Do YYYY'
+     });
+     maxDate = new DateTime($('#max'), {
+         format: 'MMMM Do YYYY'
+     });
+  
+     // DataTables initialisation
+     var table = $('#example').DataTable();
+  
+     // Refilter the table
+     $('#min, #max').on('change', function () {
+         table.draw();
+     });
+ });
+</script>
+  </head>
+
+  <body>
+      <div class="container">
+          <table>
+              <tr>
+                  <th>Date From<input placeholder="Select date"  id="min" name="min" class="form-control">
+                    Date To<input placeholder="Select date" id="max" name="max" class="form-control">
+                    Select Engagement Profile(s)<select class="selectpicker">
+                        <option data-icon="fa-heart">Ketchup</option>
+                    </select>
+                    Select User(s)<select class="selectpicker" >
+                        <option data-icon="fa-heart">Ketchup</option>
+                    </select>
+                    Select Event(s)<select class="selectpicker" >
+                        <option data-icon="fa-heart">Ketchup</option>
+                    </select>  </th>
+              </tr>
+          </table>
+          <table id="example" border="0" cellspacing="5" cellpadding="5">
+              <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>User</th>
+                    <th>Engagement Profile</th>
+                    <th>Event</th>
+                    <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>01/18/2038</td>
+                  <td>Expert User</td>
+                  <td>abc</td>
+                  <td>edit</td>
+                  <td>DataTable. The example is the same as the DataTables number range filter, but operating on the Start date column rather th</td>
+                </tr>
+                <tr>
+                    <td>01/18/2038</td>
+                    <td>Expert User</td>
+                    <td>audit profile</td>
+                    <td>edit</td>
+                    <td>DataTable. The example is the same as the DataTables number range filter, but operating on the Start date column rather th</td>
+                  </tr>
+                  <tr>
+                    <td>01/18/2038</td>
+                    <td>Expert User</td>
+                    <td>def</td>
+                    <td>edit</td>
+                    <td>DataTable. The example is the same as the DataTables number range filter, but operating on the Start date column rather th</td>
+                  </tr>
+                  <tr>
+                    <td>01/18/2038</td>
+                    <td>Expert User</td>
+                    <td>hhh</td>
+                    <td>edit</td>
+                    <td>DataTable. The example is the same as the DataTables number range filter, but operating on the Start date column rather th</td>
+                  </tr>
+               
+              </tbody>
+          </table>
+
+          
+            
+           
+        
+    </div>
+   </body>
+
+</html>
